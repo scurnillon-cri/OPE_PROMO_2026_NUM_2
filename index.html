@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OPÉRATION PROMO 2026 ETE – Le C.R.I.- Confidentiel</title>
+
+  <style>
+    :root {
+      --bg: #122a4e;
+      --card: #ffffff;
+      --ink: #0e1b2a;
+      --brand: #122a4e;
+      --shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    /* ================= LOGIN ================= */
+    #login-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .login-card {
+      background: #fff;
+      padding: 32px 28px;
+      border-radius: 18px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,.3);
+    }
+
+    .login-card h1 { margin: 0 0 10px; color: var(--brand); font-size: 1.4rem; }
+    .login-card input { width: 100%; padding: 12px; margin-bottom: 16px; border-radius: 10px; border: 1px solid #ccc; }
+    .login-card button { width: 100%; padding: 12px; border-radius: 10px; border: none; background: var(--brand); color: #fff; font-weight: 700; cursor: pointer; }
+
+    .error { display: none; margin-top: 14px; font-size: 0.9rem; color: #c62828; }
+
+    /* ================= LAYOUT ================= */
+    .hero { background: #fff; padding: 20px; display: flex; justify-content: center; }
+    .hero img { width: 100%; max-width: 1000px; max-height: 320px; object-fit: contain; }
+
+    .wrap { max-width: 1300px; margin: auto; padding: 32px 16px 48px; }
+    .actions { display: flex; gap: 12px; margin-bottom: 22px; }
+
+    .btn-print {
+      background: #fff; color: var(--brand); border: 2px solid var(--brand);
+      padding: 12px 16px; border-radius: 14px; font-weight: 800; cursor: pointer;
+    }
+    .btn-print:hover { background: var(--brand); color: #fff; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
+      padding: 18px; min-height: 210px; text-align: center;
+    }
+
+    .logo { height: 70px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+    .logo img { max-height: 100%; max-width: 100%; object-fit: contain; }
+    .text { font-size: 14px; line-height: 1.4; white-space: pre-line; }
+
+    /* ================= MODAL ================= */
+    .modal {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+      display: none; align-items: center; justify-content: center; z-index: 10000;
+      padding: 20px;
+    }
+    .modal-content {
+      background: #fff; padding: 25px; border-radius: 18px;
+      max-width: 600px; width: 100%; max-height: 80vh; overflow-y: auto;
+    }
+    .supplier-list-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0;
+    }
+    .supplier-list-grid label { font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+    
+    /* CORRECTION LIGNE 96 ICI */
+    .modal-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; border-top: 1px solid #eee; padding-top: 15px; }
+
+    footer { 
+  background: transparent; /* On enlève le fond blanc qui bloque */
+  padding: 32px 16px; 
+  text-align: center; 
+  color: #000; /* On force le texte en noir */
+}
+
+    @media print {
+      /* ON ENLEVE 'footer' DE CETTE LISTE POUR QU'IL S'AFFICHE */
+      #login-screen, .actions, .modal { display: none !important; }
+      body { background: #fff; }
+      .card { box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; }
+      footer { background: transparent; padding: 10px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="login-screen">
+  <div class="login-card">
+    <h1>Accès réservé</h1>
+    <p>Opération Promo 2026<br>Le Club des Revendeurs Installateurs</p>
+    <input type="password" id="password" placeholder="Mot de passe" />
+    <button type="button" onclick="checkPassword()">Accéder</button>
+    <div class="error" id="login-error">Mot de passe incorrect</div>
+  </div>
+</div>
+
+<header class="hero">
+  <img src="images/Banniere.jpg" alt="Opération Promo 2026">
+</header>
+
+<div class="wrap">
+  <div class="actions">
+    <button class="btn-print" onclick="openModal()">Sélectionner les fournisseurs</button>
+    <button class="btn-print" onclick="window.print()">PDF / Imprimer</button>
+  </div>
+  <main class="grid" id="grid"></main>
+</div>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <h2>Choisir les fournisseurs</h2>
+    <div class="supplier-list-grid" id="supplierList"></div>
+    <div class="modal-actions">
+      <button class="btn-print" onclick="selectAll(true)">Tout cocher</button>
+      <button class="btn-print" onclick="selectAll(false)">Tout décocher</button>
+      <button class="btn-print" style="background:var(--brand); color:#fff" onclick="applySelection()">Valider</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p style="margin: 0; font-weight: bold; color: red;">CONFIDENTIEL</p>
+  <strong>👉 Le CRI 👈</strong><br>
+  Le Club des Revendeurs Installateurs<br>
+  <a href="mailto:contact@cri-leclub.com">Contact</a> •
+  <a href="https://www.linkedin.com/company/le-cri/" target="_blank">LinkedIn</a>
+</footer>
+
+<script>
+  const SUPPLIERS = [
+    { n: "Alu Preference", l: "logos/ALU_PREFERENCE.png", t: "Remise supplémentaire de 5%\n(hors portes d'entrée)" },
+    { n: "AMGO", l: "logos/AMGO.png", t: "Offres spéciales PVC & ALU\nRemise supplémentaire de 7% à 10%\nselon gamme et dormants" },
+    { n: "Art Home Alu", l: "logos/Arthomealu.jpg", t: "Option éclairage - Spots LED offerts" },
+    { n: "Bandalux", l: "logos/bandalux.png", t: "Remise supplémentaire de 5% - Applicable uniquement sur la base de notre remise de 66% (sauf bannes, automatismes, toilesconfectionnées, toiles métrage)." },
+    { n: "Baumann + Hüppe", l: "logos/baumann_hupe.png", t: "Remise supplémentaire de 5%\n(hors remise spéciale 'projet')" },
+    { n: "Bel'M", l: "logos/Belm.jpg", t: "Remise supplémentaire de 3%\nSur les portes ALU\n(Hors PS, hors prix spéciaux, hors SAV)\nOffre non cumulable avec d'autres offres" },
+    { n: "Bieber", l: "logos/bieber.jpg", t: "Remise supplémentaire de 5%" },
+    { n: "Boulangeot", l: "logos/boulangeot.png", t: "Remise supplémentaire de 3%" },
+    { n: "Bremaud", l: "logos/Bremaud.jpg", t: "Gamme ALU : aide de 2%\nGamme PVC : aide de 2% (hors gamme SERA)\nGamme BOIS : aide de 2%" },
+    { n: "Cadiou", l: "logos/cadiou.png", t: "Remise supplémentaire de 7%\nKOSTUM, CEKLO, COTE PORTAIL\n (Hors prix spéciaux)" },
+    { n: "Chauvat", l: "logos/chauvat.png", t: "Remise supplémentaire de 3%" },
+    { n: "Ehret", l: "logos/Ehret.png", t: "Remise supplémentaire de 10%" },
+    { n: "Elva", l: "logos/Elva.png", t: "Remise supplémentaire de 4%\n Sur BOIS & PVC" },
+    { n: "Futurol", l: "logos/Futurol.png", t: "Remise supplémentaire de 5%sur tous produits complets" },
+    { n: "Gaviota", l: "logos/Gaviota.jpg", t: "Remise supplémentaire de 3%" },
+    { n: "La Toulousaine", l: "logos/La_toulousaine.jpg", t: "Remise supplémentaire de 5%" },
+    { n: "Legallais", l: "logos/Legallais.png", t: "Remise supplémentaire de 10%\nSauf sauf silicone, fermes portes, service ILLICO, moustiquaires, bâton de maréchal, grille de ventilation" },
+    { n: "Marquises", l: "logos/Marquises.jpg", t: "OFFRE JOURS FOUS/n+10% sauf open R et open R2 et R3 qui bénéficient de +20%/n(non applicable sur les options et équipements tels que ZIP Open, BSOOpen, Open’Sol)/nOFFRE SOLAIRE/n Pour l’achat d’un store en Motorisation Autonome, parmi les modèles Ambre, Jade, Loggia, On’x, Quartz, Perle et Véranda/nLe moteur solaire est au prix du moteur radio IO Somfy, soit un avantage de 346 € PP HT (selon Tarifs en vigueur en décembre 2025)" },
+    { n: "Molenat", l: "logos/molenat.jpg", t: "Plus-value OB offerte sur les gammes bois Lena" },
+    { n: "Neobaie", l: "logos/neobaie.png", t: "Remise supplémentaire de 5%" },
+    { n: "Picard", l: "logos/picard.jpg", t: "Remise supplémentaire de 5%\nsur Portes Diamant 10, Diamant 20\n Diamant 2 vantaux et tierce, Diamant Sérénité" },
+    { n: "Prefal", l: "logos/Prefal.png", t: "Remise supplémentaire de 6%" },
+    { n: "Profalux", l: "logos/profalux.png", t: "Remise supplémentaire de 5%" },
+    { n: "Roziere", l: "logos/roziere.png", t: "Remise supplémentaire de 4% sur la gamme bi-matière" },
+    { n: "Serpug", l: "logos/serpug.png", t: "1 point de remise supplémentaire sur :/nGRILLES - AZUR / CLOSE / DROITE TORSADEE / LAGUNE / EPIS / GALBEE / TOULOUSAINE / VOLUTE/nDimensions 75/40 - 75/60 - 95/60 - 95/80 : Remise 69 à 70 %/n*uniquement en scellement entre tableau et pré peint noir (sans option)" },
+    { n: "Sifisa", l: "logos/sifisa.png", t: "Gammes façades de placard sur-mesure (hors chantier) = remise +5%/nGammes aménagements 2D et 3D = remise +5%/nGammes verrières sur-mesure = remise +10%/nGammes portes d'intérieur Sifisa = remise +5%" },
+    { n: "Soko", l: "logos/soko.jpg", t: "Remise supplémentaire de 5%\nen pied de facture" },
+    { n: "Somfy", l: "logos/somfy.png", t: "Remise complémentaire de +10%\nDepuis l'Eshop sur \ncode remise: AUT 206 réf de télécommandes et capteurs motorisation et remplacement de volet roulant + kit Yslo Flex" },
+    { n: "Soprofen", l: "logos/soprofen.jpg", t: "Remise supplémentaire de 5%\nSur VR - PG - PS" },
+    { n: "Sothoferm", l: "logos/sothoferm.png", t: "Remise supplémentaire de 4%" },
+    { n: "Tubauto", l: "logos/tubauto.jpg", t: "Remise supplémentaire de 5%\nSur la gamme sectionnelle EUROMATIC/nMultiple couleur au prix du blanc - Portillon intégré disponible en option"},
+    { n: "Zilten", l: "logos/Zilten.png", t: "Remise supplémentaire de 3%\n Sur les gammes NATIV & PVC" }
+  ];
+
+  let selectedIndices = SUPPLIERS.map((_, i) => i);
+
+  function init() {
+    renderSuppliers();
+    const listContainer = document.getElementById("supplierList");
+    SUPPLIERS.forEach((s, i) => {
+      const label = document.createElement("label");
+      label.innerHTML = `<input type="checkbox" checked data-i="${i}"> ${s.n}`;
+      listContainer.appendChild(label);
+    });
+  }
+
+  function renderSuppliers() {
+    const grid = document.getElementById("grid");
+    grid.innerHTML = "";
+    SUPPLIERS.forEach((s, i) => {
+      if (selectedIndices.includes(i)) {
+        grid.innerHTML += `
+          <div class="card">
+            <div class="logo"><img src="${s.l}" alt="${s.n}"></div>
+            <div class="text">${s.t}</div>
+          </div>
+        `;
+      }
+    });
+  }
+
+async function checkPassword() {
+  const val = document.getElementById("password").value;
+  const errorDiv = document.getElementById("login-error");
+
+  try {
+    // On appelle la fonction Netlify au lieu de vérifier localement
+    const response = await fetch('/.netlify/functions/check-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: val }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      // Si le serveur dit OK, on cache l'écran de login
+      document.getElementById("login-screen").style.display = "none";
+    } else {
+      // Sinon, on affiche l'erreur
+      errorDiv.style.display = "block";
+      errorDiv.innerText = "Mot de passe incorrect";
+    }
+  } catch (err) {
+    errorDiv.style.display = "block";
+    errorDiv.innerText = "Erreur de connexion au serveur";
+  }
+}
+
+  function openModal() { document.getElementById("modal").style.display = "flex"; }
+  
+  function applySelection() {
+    selectedIndices = [];
+    document.querySelectorAll("#supplierList input").forEach(input => {
+      if (input.checked) selectedIndices.push(parseInt(input.dataset.i));
+    });
+    renderSuppliers();
+    document.getElementById("modal").style.display = "none";
+  }
+
+  function selectAll(bool) {
+    document.querySelectorAll("#supplierList input").forEach(input => input.checked = bool);
+  }
+
+  document.addEventListener("keydown", e => { if (e.key === "Enter") checkPassword(); });
+  
+  window.onload = init;
+</script>
+
+</body>
+</html>

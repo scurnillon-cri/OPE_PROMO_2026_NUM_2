@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OPÉRATION PROMO 2026</title>
+
+    <style>
+      :root {
+        --bg: #1f49b6;
+        --card: #ffffff;
+        --ink: #0e1b2a;
+        --brand: #0a2a6b;
+        --shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+        --radius: 18px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family:
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          Roboto,
+          Arial,
+          sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+      }
+      .wrap {
+        max-width: 1300px;
+        margin: auto;
+        padding: 32px 16px 48px;
+      }
+
+      /* HEADER */
+      header {
+        color: #fff;
+        margin-bottom: 20px;
+      }
+      header h1 {
+        margin: 0;
+        font-size: 40px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+      header .dates {
+        font-size: 18px;
+        font-weight: 600;
+        opacity: 0.9;
+      }
+
+      /* ACTIONS */
+      .actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 22px;
+      }
+      button {
+        border: none;
+        padding: 12px 16px;
+        border-radius: 14px;
+        font-weight: 800;
+        cursor: pointer;
+      }
+      .btn-main {
+        background: #fff;
+        color: var(--brand);
+      }
+      .btn-print {
+        background: #0a2a6b;
+        color: #fff;
+      }
+
+      /* GRID */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 18px;
+      }
+      .card {
+        background: #fff;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        min-height: 210px;
+      }
+      .logo {
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 12px;
+      }
+      .logo img {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+      }
+      .text {
+        font-size: 14px;
+        line-height: 1.4;
+        white-space: pre-line;
+        text-align: center;
+      }
+
+      /* MODALE */
+      .modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+      }
+      .modal-content {
+        background: #fff;
+        border-radius: 18px;
+        max-width: 900px;
+        width: 90%;
+        max-height: 80vh;
+        overflow: auto;
+        padding: 20px;
+      }
+      .modal h2 {
+        margin-top: 0;
+        color: var(--brand);
+      }
+      .list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 10px;
+      }
+      .list label {
+        font-size: 13px;
+        cursor: pointer;
+      }
+      .modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      /* PRINT */
+      @media print {
+        body {
+          background: #fff;
+        }
+        .actions,
+        .modal {
+          display: none;
+        }
+        header {
+          color: #000;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrap">
+      <header>
+        <h1>OPÉRATION PROMO 2026</h1>
+        <div class="dates">Du 30 mars au 27 avril 2026</div>
+      </header>
+
+      <div class="actions">
+        <button class="btn-main" onclick="openModal()">
+          Sélectionner les fournisseurs
+        </button>
+        <button class="btn-print" onclick="window.print()">
+          PDF / Imprimer
+        </button>
+      </div>
+
+      <main class="grid" id="grid"></main>
+
+      <!-- MODALE -->
+      <div class="modal" id="modal">
+        <div class="modal-content">
+          <h2>Choisir les fournisseurs à afficher</h2>
+          <div class="list" id="supplierList"></div>
+          <div class="modal-actions">
+            <button class="btn-main" onclick="selectAll(true)">
+              Tout sélectionner
+            </button>
+            <button class="btn-main" onclick="selectAll(false)">
+              Tout désélectionner
+            </button>
+            <button class="btn-print" onclick="applySelection()">
+              Valider
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        const SUPPLIERS = [
+          {
+            n: "Albigès",
+            l: "logos/ALBIGES.Jpg",
+            t: "Remises supplémentaires de 10% sur stores, voiles\n(hors vallauris, poteaux LOV et voiles easy sail)",
+          },
+          {
+            n: "Alu Preference",
+            l: "logos/ALU_PREFERENCE.png",
+            t: "Tout à 5% (hors porte d’entrée)",
+          },
+          { n: "AMGO", l: "logos/AMGO.png", t: "Offres spéciales PVC & ALU" },
+          {
+            n: "Art Home Alu",
+            l: "logos/Arthomealu.jpg",
+            t: "Spots LED offerts",
+          },
+          {
+            n: "Bandalux",
+            l: "logos/bandalux.png",
+            t: "Remise supplémentaire de 5%",
+          },
+          {
+            n: "Baumann + Hüppe",
+            l: "logos/baumann hupe.png",
+            t: "Remise supplémentaire de 5%",
+          },
+          { n: "Bel’M", l: "logos/Belm.jpg", t: "+3% sur portes" },
+          { n: "Berner", l: "logos/berner.png", t: "Opération nationale" },
+          { n: "Bieber", l: "logos/bieber.jpg", t: "+5% sur toute commande" },
+          { n: "Boulangeot", l: "logos/boulangeot.png", t: "+3% en cascade" },
+          {
+            n: "Bremaud",
+            l: "logos/Bremaud.jpg",
+            t: "ALU +3% | PVC +5% | BOIS +3%",
+          },
+          { n: "Cadiou", l: "logos/cadiou.png", t: "+7% sur portails" },
+          { n: "Chauvat", l: "logos/chauvat.png", t: "+3% complémentaire" },
+          {
+            n: "DL Chemicals",
+            l: "logos/DL_ChemicaIs.png",
+            t: "-5% sur silicones AX Construct",
+          },
+          { n: "Ehret", l: "logos/Ehret.png", t: "+10% complémentaire" },
+          { n: "Elva", l: "logos/Elva.png", t: "+4% sur BOIS & PVC" },
+          {
+            n: "Futurol",
+            l: "logos/Futurol.png",
+            t: "+5% sur produits complets",
+          },
+          {
+            n: "Gaviota",
+            l: "logos/Gaviota.jpg",
+            t: "Motorisation radio offerte +3%",
+          },
+          {
+            n: "La Toulousaine",
+            l: "logos/La toulousaine.jpg",
+            t: "+5% supplémentaire",
+          },
+          {
+            n: "Legallais",
+            l: "logos/Legallais.png",
+            t: "Tout à -10% (sauf exclusions)",
+          },
+          { n: "Mariton", l: "logos/Ma riton.jpg", t: "+7% via espace pro" },
+          {
+            n: "Marquises",
+            l: "logos/Marquises.jpg",
+            t: "+10% jours fous + offre solaire",
+          },
+          { n: "Molenat", l: "logos/molenat.jpg", t: "+5% supplémentaire" },
+          { n: "Neobaie", l: "logos/neobaie.png", t: "+5% sur commandes" },
+          { n: "Nice", l: "logos/Nice.png", t: "Opération nationale" },
+          { n: "Picard", l: "logos/picard.jpg", t: "+5% sur gammes Diamant" },
+          { n: "Prefal", l: "logos/Prefal.png", t: "+6% complémentaire" },
+          { n: "Profalux", l: "logos/profalux.png", t: "+5% supplémentaire" },
+          { n: "SER PUG", l: "logos/serpug.png", t: "Voir GAP Community" },
+          { n: "Sifisa", l: "logos/sifisa.jpg", t: "Voir GAP Community" },
+          { n: "Soko", l: "logos/soko.jpg", t: "+5% pied de facture" },
+          { n: "Somfy", l: "logos/somfy.png", t: "-10% sur kits motorisation" },
+          { n: "Soprofen", l: "logos/soprofen.jpg", t: "+5% sur VR / PG / PS" },
+          { n: "Sothoferm", l: "logos/sothoferm.png", t: "+4% supplémentaire" },
+          {
+            n: "Tubauto",
+            l: "logos/tubauto.jpg",
+            t: "+5% sur sectionnelles EUROMATIC",
+          },
+          {
+            n: "Wibaie",
+            l: "logos/wibaie.png",
+            t: "1,5% coulissants ALU\n3% OB ALU",
+          },
+          {
+            n: "Zilten",
+            l: "logos/ZiIten.png",
+            t: "+3% sur gammes NATIV & PVC",
+          },
+        ];
+
+        let selected = SUPPLIERS.map(() => true);
+
+        const grid = document.getElementById("grid");
+        const list = document.getElementById("supplierList");
+        const modal = document.getElementById("modal");
+
+        SUPPLIERS.forEach((s, i) => {
+          const l = document.createElement("label");
+          l.innerHTML = `<input type="checkbox" checked data-i="${i}"> ${s.n}`;
+          list.appendChild(l);
+        });
+
+        function render() {
+          grid.innerHTML = "";
+          SUPPLIERS.forEach((s, i) => {
+            if (!selected[i]) return;
+            grid.innerHTML += `
+      <div class="card">
+        <div class="logo"><img src="${s.l}"></div>
+        <div class="text">${s.t}</div>
+      </div>`;
+          });
+        }
+
+        function openModal() {
+          modal.style.display = "flex";
+        }
+        function applySelection() {
+          document.querySelectorAll("#supplierList input").forEach((i) => {
+            selected[i.dataset.i] = i.checked;
+          });
+          modal.style.display = "none";
+          render();
+        }
+        function selectAll(v) {
+          document
+            .querySelectorAll("#supplierList input")
+            .forEach((i) => (i.checked = v));
+        }
+
+        render();
+      </script>
+    </div>
+  </body>
+</html>
