@@ -7,11 +7,15 @@
 
   <style>
     :root {
-      --bg: #122a4e;
-      --card: #ffffff;
-      --ink: #0e1b2a;
+      /* Thème estival : Ciel bleu, Sable et Mer turquoise */
+      --sky-top: #26a0da;
+      --sky-bottom: #31a7ee;
+      --sea-blue: #00a4b4;
+      --sand-light: #f6ecdc;
+      --card: rgba(255, 255, 255, 0.92); /* Transparence pour voir le fond sable */
+      --ink: #0e243a;
       --brand: #122a4e;
-      --shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+      --shadow: 0 12px 28px rgba(18, 42, 78, 0.15);
       --radius: 18px;
     }
 
@@ -20,7 +24,16 @@
     body {
       margin: 0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: var(--bg);
+      /* Superbe dégradé évoquant le ciel, la plage et la mer en fond de page */
+      background: linear-gradient(to bottom, 
+        #fff 0%, 
+        #e0f4ff 300px, 
+        var(--sand-light) 500px, 
+        #eddcc4 1000px,
+        #cbebee 1500px,
+        var(--sea-blue) 100%
+      );
+      background-attachment: fixed;
       color: var(--ink);
     }
 
@@ -28,7 +41,7 @@
     #login-screen {
       position: fixed;
       inset: 0;
-      background: var(--bg);
+      background: linear-gradient(135deg, var(--brand) 0%, #081526 100%);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -52,63 +65,95 @@
     .error { display: none; margin-top: 14px; font-size: 0.9rem; color: #c62828; }
 
     /* ================= LAYOUT ================= */
-    .hero { background: #fff; padding: 20px; display: flex; justify-content: center; }
+    .hero { 
+      background: #fff; 
+      padding: 24px 20px; 
+      display: flex; 
+      justify-content: center;
+      border-bottom: 4px solid #ffd54f; /* Ligne jaune soleil sous la bannière */
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
     .hero img { width: 100%; max-width: 1000px; max-height: 320px; object-fit: contain; }
 
     .wrap { max-width: 1300px; margin: auto; padding: 32px 16px 48px; }
-    .actions { display: flex; gap: 12px; margin-bottom: 22px; }
+    
+    .actions { display: flex; gap: 12px; margin-bottom: 26px; justify-content: center; }
 
     .btn-print {
-      background: #fff; color: var(--brand); border: 2px solid var(--brand);
-      padding: 12px 16px; border-radius: 14px; font-weight: 800; cursor: pointer;
+      background: #fff; 
+      color: var(--brand); 
+      border: 2px solid var(--brand);
+      padding: 12px 22px; 
+      border-radius: 14px; 
+      font-weight: 800; 
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      transition: all 0.2s ease;
     }
-    .btn-print:hover { background: var(--brand); color: #fff; }
+    .btn-print:hover { 
+      background: var(--brand); 
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(18, 42, 78, 0.2);
+    }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 18px;
+      gap: 20px;
     }
 
     .card {
-      background: #fff; border-radius: var(--radius); box-shadow: var(--shadow);
-      padding: 18px; min-height: 210px; text-align: center;
+      background: var(--card); 
+      border-radius: var(--radius); 
+      box-shadow: var(--shadow);
+      padding: 22px; 
+      min-height: 210px; 
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(4px); /* Léger effet givré très moderne */
+      transition: transform 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
     }
 
-    .logo { height: 70px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+    .logo { height: 70px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
     .logo img { max-height: 100%; max-width: 100%; object-fit: contain; }
-    .text { font-size: 14px; line-height: 1.4; white-space: pre-line; }
+    .text { font-size: 14px; line-height: 1.4; white-space: pre-line; font-weight: 500; }
 
     /* ================= MODAL ================= */
     .modal {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+      position: fixed; inset: 0; background: rgba(14, 27, 42, 0.6);
       display: none; align-items: center; justify-content: center; z-index: 10000;
       padding: 20px;
+      backdrop-filter: blur(5px);
     }
     .modal-content {
       background: #fff; padding: 25px; border-radius: 18px;
       max-width: 600px; width: 100%; max-height: 80vh; overflow-y: auto;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
     }
     .supplier-list-grid {
       display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0;
     }
     .supplier-list-grid label { font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; gap: 8px; }
     
-    /* CORRECTION LIGNE 96 ICI */
     .modal-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; border-top: 1px solid #eee; padding-top: 15px; }
 
     footer { 
-  background: transparent; /* On enlève le fond blanc qui bloque */
-  padding: 32px 16px; 
-  text-align: center; 
-  color: #000; /* On force le texte en noir */
-}
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(4px);
+      padding: 32px 16px; 
+      text-align: center; 
+      color: #0e243a;
+      border-top: 1px solid rgba(255,255,255,0.5);
+    }
 
     @media print {
-      /* ON ENLEVE 'footer' DE CETTE LISTE POUR QU'IL S'AFFICHE */
       #login-screen, .actions, .modal { display: none !important; }
       body { background: #fff; }
-      .card { box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; }
+      .card { box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; background: #fff; }
       footer { background: transparent; padding: 10px; }
     }
   </style>
@@ -133,7 +178,7 @@
 <div class="wrap">
   <div class="actions">
     <button class="btn-print" onclick="openModal()">Sélectionner les fournisseurs</button>
-    <button class="btn-print" onclick="window.print()">PDF / Imprimer</button>
+    <button class="btn-print" style="background: var(--brand); color: #fff;" onclick="window.print()">PDF / Imprimer</button>
   </div>
   <main class="grid" id="grid"></main>
 </div>
@@ -151,11 +196,11 @@
 </div>
 
 <footer>
-  <p style="margin: 0; font-weight: bold; color: red;">CONFIDENTIEL</p>
+  <p style="margin: 0 0 8px; font-weight: bold; color: #d32f2f; letter-spacing: 1px;">CONFIDENTIEL</p>
   <strong>👉 Le CRI 👈</strong><br>
   Le Club des Revendeurs Installateurs<br>
-  <a href="mailto:contact@cri-leclub.com">Contact</a> •
-  <a href="https://www.linkedin.com/company/le-cri/" target="_blank">LinkedIn</a>
+  <a href="mailto:contact@cri-leclub.com" style="color: var(--brand);">Contact</a> •
+  <a href="https://www.linkedin.com/company/le-cri/" target="_blank" style="color: var(--brand);">LinkedIn</a>
 </footer>
 
 <script>
@@ -226,7 +271,6 @@ async function checkPassword() {
   const errorDiv = document.getElementById("login-error");
 
   try {
-    // On appelle la fonction Netlify au lieu de vérifier localement
     const response = await fetch('/.netlify/functions/check-password', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -236,10 +280,8 @@ async function checkPassword() {
     const data = await response.json();
 
     if (data.success) {
-      // Si le serveur dit OK, on cache l'écran de login
       document.getElementById("login-screen").style.display = "none";
     } else {
-      // Sinon, on affiche l'erreur
       errorDiv.style.display = "block";
       errorDiv.innerText = "Mot de passe incorrect";
     }
