@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OPÉRATION PROMO ETE 2026 – Le C.R.I.</title>
+  <style>
+    :root {
+      --sky-top: #26a0da;
+      --sky-bottom: #31a7ee;
+      --sea-blue: #00a4b4;
+      --sand-light: #f6ecdc;
+      --ink: #0e243a;
+      --white: #ffffff;
+      --gray-light: #f8f9fa;
+      --shadow: 0 8px 24px rgba(14, 36, 58, 0.1);
+      --radius: 12px;
+    }
+
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color: --ink;
+      background-color: var(--sand-light);
+      background: linear-gradient(135deg, var(--sand-light) 0%, #fffbf5 100%);
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+
+    /* Bannière supérieure */
+    .banner {
+      background: linear-gradient(135deg, var(--sky-top) 0%, var(--sky-bottom) 100%);
+      color: var(--white);
+      padding: 40px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .banner h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+
+    .banner p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Container principal */
+    .container {
+      max-width: 900px;
+      margin: 40px auto 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Sections / Blocs de contenu */
+    .section-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow);
+      border-top: 5px solid var(--sea-blue);
+    }
+
+    .section-card h2 {
+      font-size: 1.4rem;
+      color: var(--ink);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-card p {
+      color: #4a5568;
+      line-height: 1.6;
+      font-size: 1.05rem;
+      margin-bottom: 20px;
+    }
+
+    /* Boutons */
+    .btn {
+      display: inline-block;
+      background-color: var(--sea-blue);
+      color: var(--white);
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s ease-in-out;
+      box-shadow: 0 4px 10px rgba(0, 164, 180, 0.2);
+    }
+
+    .btn:hover {
+      background-color: #008b99;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(0, 164, 180, 0.3);
+    }
+
+    /* Grille de cartes pour la communication */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .card-item {
+      background: var(--gray-light);
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius);
+      padding: 25px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-item:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow);
+      border-color: var(--sky-top);
+      background: var(--white);
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-desc {
+      font-size: 0.95rem;
+      color: #64748b;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .card-link-text {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--sky-top);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .card-item:hover .card-link-text {
+      color: var(--sky-bottom);
+    }
+
+    @media (max-width: 600px) {
+      .banner h1 { font-size: 1.8rem; }
+      .section-card { padding: 20px; }
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bannière principale en haut de page -->
+  <header class="banner">
+    <h1>OPÉRATION PROMO ÉTÉ 2026</h1>
+    <p>Club des Revendeurs Installateurs (Le C.R.I.) — Espace Confidentiel</p>
+  </header>
+
+  <main class="container">
+
+    <!-- Section : Accompagnement Fournisseurs -->
+    <section class="section-card">
+      <h2>🤝 Voir l'accompagnement fournisseurs</h2>
+      <p>Découvrez l'ensemble des conditions négociées, des remises exceptionnelles et des supports mis à votre disposition par nos partenaires fabricants pour cette campagne estivale.</p>
+      <a href="#" class="btn">Voir le détail de l'offre</a>
+    </section>
+
+    <!-- Section : Communication -->
+    <section class="section-card">
+      <h2>📢 Section communication</h2>
+      <p>Accédez aux outils et kits de communication prêts à l'emploi pour dynamiser vos ventes et contacter vos clients.</p>
+      
+      <div class="cards-grid">
+        <!-- Carte E-mails -->
+        <a href="00_Apercu global des mails.html" class="card-item">
+          <div>
+            <div class="card-title">✉️ E-mails</div>
+            <div class="card-desc">Visualisez la séquence complète des 10 e-mails marketing, du lancement à l'ultime chance.</div>
+          </div>
+          <div class="card-link-text">Consulter le catalogue →</div>
+        </a>
+
+        <!-- Carte SMS -->
+        <a href="SMS.html" class="card-item">
+          <div>
+            <div class="card-title">📱 SMS</div>
+            <div class="card-desc">Accédez aux modèles de SMS courts et percutants pour relancer vos prospects directement sur leur mobile.</div>
+          </div>
+          <div class="card-link-text">Voir les modèles →</div>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>

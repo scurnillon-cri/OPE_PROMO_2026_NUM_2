@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📦☀️Campagne PROMO été 2026</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #f4f7f6; padding: 20px; }
+        .container { max-width: 1200px; margin: auto; }
+        h1 { color: #2c3e50; text-align: center; margin-bottom: 10px; }
+        .intro { text-align: center; color: #666; margin-bottom: 40px; font-size: 16px; }
+        
+        /* Grid Layout */
+        .campaign-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 25px; }
+        
+        /* Email Card */
+        .email-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid #ccc; display: flex; flex-direction: column; transition: transform 0.2s; }
+        .email-card:hover { transform: translateY(-5px); }
+        
+        /* Color Coding */
+        .email-card.lancement { border-top-color: #27ae60; }
+        .email-card.produit { border-top-color: #3498db; }
+        .email-card.cloture { border-top-color: #e74c3c; }
+        
+        .card-header { padding: 15px; background: #f8f9fa; border-bottom: 1px solid #eee; }
+        .card-header .tag { font-size: 10px; font-weight: bold; text-transform: uppercase; padding: 3px 10px; border-radius: 12px; background: #eee; color: #666; }
+        .card-header h3 { margin: 10px 0 5px 0; font-size: 16px; color: #2c3e50; }
+        
+        .card-body { padding: 15px; flex-grow: 1; display: flex; flex-direction: column; }
+        .meta { font-size: 12px; margin-bottom: 8px; line-height: 1.4; }
+        .meta strong { color: #555; }
+        
+        /* Mini Preview */
+        .preview-box { background: #f9f9f9; border: 1px dashed #bbb; padding: 12px; border-radius: 4px; font-size: 11px; color: #777; text-align: center; margin-top: auto; margin-bottom: 15px; }
+        
+        /* Action Buttons */
+        .card-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; border-top: 1px solid #eee; padding-top: 15px; }
+        .btn { display: inline-block; text-align: center; padding: 8px 12px; font-size: 12px; font-weight: bold; text-decoration: none; border-radius: 4px; transition: background 0.2s; }
+        
+        .btn-model { background-color: #27ae60; color: white; }
+        .btn-model:hover { background-color: #219653; }
+        
+        .btn-info { background-color: #7f8c8d; color: white; }
+        .btn-info:hover { background-color: #6c7a7b; }
+        
+        .footer-note { margin-top: 50px; padding: 25px; background: #2c3e50; color: white; border-radius: 8px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>☀️Campagne PROMO été 2026</h1>
+        <p class="intro">Séquence stratégique d'emails du 30 mai au 30 juin 2026</p>
+
+        <div class="campaign-grid">
+            
+            <div class="email-card lancement">
+                <div class="card-header">
+                    <span class="tag">01 - Lancement</span>
+                    <h3>Annonce de l'opération</h3>
+                </div>
+                <div class="card-body">
+                    <div class="meta"><strong>Objet :</strong> ☀️ Opération PROMO été 2026 : Préparez votre extérieur et votre maison (jusqu'à -15%)</div>
+                    <div class="meta"><strong>Preheader :</strong> Profitez de réductions exceptionnelles sur votre projet</div>
+                    <div class="preview-box">Header > Visuel Eté > Offre Globale > Liste Produits</div>
+                    <div class="card-actions">
+                        <a href="01_Lancement_Operation_Ete.html" class="btn btn-model" target="_blank">Voir le modèle</a>
+                        <a href="01__Info.html" class="btn btn-info" target="_blank">Fiche Info</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="email-card lancement">
+                <div class="card-header">
+                    <span class="tag">02 - Stratégie</span>
+                    <h3>L'anticipation client</h3>
+                </div>
+                <div class="card-body">
+                    <div class="meta"><strong>Objet :</strong> ⏳ Pourquoi c'est maintenant ?</div>
+                    <div class="meta"><strong>Preheader :</strong> Découvrez les 3 avantages exclusifs de lancer votre projet dès maintenant.</div>
+                    <div class="preview-box">Texte argumentaire > Bénéfices installation > Appel à l'action</div>
+                    <div class="card-actions">
+                        <a href="02_Anticipation_Strategie.html" class="btn btn-model" target="_blank">Voir le modèle</a>
+                        <a href="02__Info.html" class="btn btn-info" target="_blank">Fiche Info</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="email-card produit">
+                <div class="card-header">
+                    <span class="tag">03 - Produit</span>
+                    <h3>Moustiquaire</h3>
+                </div>
+                <div class="card-body">
+                    <div class="meta"><strong>Objet :</strong> 🌙 Dormez enfin les fenêtres grandes ouvertes</div>
+                    <div class="meta"><strong>Preheader :</strong> Profitez de 15% de remise sur vos moustiquaires sur-mesure</div>
+                    <div class="preview-box">Focus Sommeil & Fraîcheur > -15% > Devis Gratuit</div>
+                    <div class="card-actions">
+                        <a href="03_Produit_Moustiquaire.html" class="btn btn-model" target="_blank">Voir le modèle</a>
+                        <a href="03__Info.html" class="btn btn-info" target="_blank">Fiche Info</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="email-card produit">
+                <div class="card-header">
+                    <span class="tag">04 - Produit</span>
+                    <h3>Pergola</h3>
+                </div>
+                <div class="card-body">
+                    <div class="meta"><strong>Objet :</strong> 🍹 Votre future pièce préférée n'a pas de murs...</div>
+                    <div class="meta"><strong>Preheader :</strong> Jusqu'à -15% sur les pergolas : préparez vos apéros sur votre terrasse ombragée et ventilée dès maintenant.</div>
+                    <div class="preview-box">Visuel Terrasse > Vie extérieure > Offre Printemps</div>
+                    <div class="card-actions">
+                        <a href="04_Produit_Pergola.html" class="btn btn-model" target="_blank">Voir le modèle</a>
+                        <a href="04__Info.html" class="btn btn-info" target="_blank">Fiche Info</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="email-card produit">
+                <div class="card-header">
+                    <span class="tag">05 - Produit</span>
+                    <h3>Carport</h3>
+                </div>
+                <div class="card-body">
+                    <div class="meta"><strong>Objet :</strong> 🚗 Fini le volant et les sièges brûlants !</div>
+                    <div class="meta"><strong>Preheader :</strong> Offrez un abri design à votre véhicule avec 15% de remise</div>
+                    <div class="preview-box">Protection Véhicule > Confort quotidien > Offre Carport</div>
+                    <div class="card-actions">
+                        <a href="05_Produit_Carport.html" class="btn btn-model" target="_blank">Voir le modèle</a>
+                        <a href="05__Info.html" class="btn btn-info" target="_blank">Fiche Info</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="email-card produit">
+                <div class="card-header">
+                    <span class="tag">06 - Produit</span>
+                    <h3>Porte d'entrée</h3>
+                </div>
+                <div class="card-body">
+                    <div class="meta"><strong>Objet :</strong> 🏠 Sécurité, Style, Silence, Isolation : changez votre porte</div>
+                    <div class="meta"><strong>Preheader :</strong> Profitez de 15% de réduction sur une large gamme</div>
+                    <div class="preview-box">Design Façade > Sécurité renforcée > Offre Portes</div>
+                    <div class="card-actions">
+                        <a href="06_Produit_Porte_Entree.html" class="btn btn-model" target="_blank">Voir le modèle</a>
+                        <a href="06__Info.html" class="btn btn-info" target="_blank">Fiche Info</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="email-card produit">
+                <div class="card-header">
+                    <span class="tag">07 - Produit</span>
+                    <h3>Baie Vitrée</h3>
+                </div>
+                <div class="card-body">
+                    <div class="meta"><strong>Objet :</strong> ☀️ Laissez entrer le soleil... mais pas la chaleur.</div>
+                    <div class="meta"><strong>Preheader :</strong> Profitez de 15% de réduction sur les baies vitrées</div>
+                    <div class="preview-box">Lumière Naturelle > Isolation > Vue Jardin</div>
+                    <div class="card-actions">
+                        <a href="07_Produit_Baie_Vitree.html" class="btn btn-model" target="_blank">Voir le modèle</a>
+                        <a href="07__Info.html" class="btn btn-info" target="_blank">Fiche Info</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="email-card produit">
+                <div class="card-header">
+                    <span class="tag">08 - Produit</span>
+                    <h3>Porte-Fenêtre</h3>
+                </div>
+                <div class="card-body">
+                    <div class="meta"><strong>Objet :</strong> 🌿 Ouvrez grand sur votre jardin !</div>
+                    <div class="meta"><strong>Preheader :</strong> Plus de lumière et un accès fluide</div>
+                    <div class="preview-box">Circulation Int/Ext > Esthétique > Confort d'été</div>
+                    <div class="card-actions">
+                        <a href="08_Produit_Porte_Fenetre.html" class="btn btn-model" target="_blank">Voir le modèle</a>
+                        <a href="08__Info.html" class="btn btn-info" target="_blank">Fiche Info</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="email-card cloture">
+                <div class="card-header">
+                    <span class="tag">09 - Clôture J-3</span>
+                    <h3>Urgence de fin</h3>
+                </div>
+                <div class="card-body">
+                    <div class="meta"><strong>Objet :</strong> ⏳ J-3 : L'Opération PROMO Eté se termine bientôt !</div>
+                    <div class="meta"><strong>Preheader :</strong> Il ne vous reste que quelques jours pour profiter de nos offres exceptionnelles</div>
+                    <div class="preview-box">Compte à rebours > Rappel des avantages > Contact urgent</div>
+                    <div class="card-actions">
+                        <a href="09_Cloture_Derniers_Jours.html" class="btn btn-model" target="_blank">Voir le modèle</a>
+                        <a href="09__Info.html" class="btn btn-info" target="_blank">Fiche Info</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="email-card cloture">
+                <div class="card-header">
+                    <span class="tag">10 - Ultime Chance</span>
+                    <h3>Dernières heures</h3>
+                </div>
+                <div class="card-body">
+                    <div class="meta"><strong>Objet :</strong> 🚨 DERNIÈRES HEURES : Les avantages exclusifs se terminent ce soir !</div>
+                    <div class="meta"><strong>Preheader :</strong> Enregistrez votre projet avant minuit pour bloquer l'offre.</div>
+                    <div class="preview-box">Alerte Minuit > Blocage Tarif > Action Immédiate</div>
+                    <div class="card-actions">
+                        <a href="10_Cloture_Ultime.html" class="btn btn-model" target="_blank">Voir le modèle</a>
+                        <a href="10__Info.html" class="btn btn-info" target="_blank">Fiche Info</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-note">
+            <strong>💡 Conseil Stratégique :</strong> Ce catalogue permet de visualiser l'ensemble de la "toile de fond" marketing. <br> 
+            Utilisez les fichiers HTML individuels correspondants pour l'intégration dans votre outil d'envoi.
+        </div>
+    </div>
+</body>
+</html>

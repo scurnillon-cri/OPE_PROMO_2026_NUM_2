@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OPÉRATION PROMO 2026 ETE – Le C.R.I.- Confidentiel</title>
+
+  <style>
+    :root {
+      /* Thème estival identique à l'accueil */
+      --sky-top: #26a0da;
+      --sky-bottom: #31a7ee;
+      --sea-blue: #00a4b4;
+      --sand-light: #f6ecdc;
+      --card-bg: rgba(255, 255, 255, 0.94);
+      --ink: #0e243a;
+      --brand: #122a4e;
+      --shadow: 0 12px 28px rgba(18, 42, 78, 0.12);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      /* Dégradé estival dynamique */
+      background: linear-gradient(135deg, var(--sky-top) 0%, var(--sand-light) 50%, #fffbf5 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      padding: 30px 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 30px;
+      backdrop-filter: blur(8px);
+      border-top: 5px solid var(--sea-blue);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      color: var(--brand);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Boutons modernisés aux couleurs de l'été */
+    .btn {
+      background: var(--sea-blue);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.2s ease-in-out;
+      box-shadow: 0 4px 12px rgba(0, 164, 180, 0.2);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .btn:hover {
+      background: #008b99;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 164, 180, 0.3);
+    }
+
+    .btn-secondary {
+      background: #64748b;
+      box-shadow: 0 4px 12px rgba(100, 116, 139, 0.2);
+    }
+    .btn-secondary:hover {
+      background: #475569;
+      box-shadow: 0 6px 18px rgba(100, 116, 139, 0.3);
+    }
+
+    /* Grille des fournisseurs */
+    #suppliersGrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 25px;
+    }
+
+    /* Cartes translucides style estival */
+    .supplier-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 25px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-top: 4px solid var(--sky-bottom);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .supplier-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 35px rgba(14, 36, 58, 0.15);
+      border-top-color: var(--sea-blue);
+    }
+
+    .supplier-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--brand);
+      margin-bottom: 8px;
+    }
+
+    .supplier-family {
+      display: inline-block;
+      background: #e6fffa;
+      color: #00a4b4;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .supplier-discount {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border-left: 4px solid #f59e0b;
+      padding: 12px;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #b45309;
+      margin-bottom: 15px;
+    }
+
+    .supplier-comment {
+      font-size: 0.95rem;
+      color: #4a5568;
+      line-height: 1.5;
+    }
+
+    /* Modal de filtrage */
+    .modal-overlay {
+      position: fixed;
+      top:0; left:0; right:0; bottom:0;
+      background: rgba(14, 36, 58, 0.4);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: var(--radius);
+      max-width: 500px;
+      width: 90%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+    .modal-header {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: var(--brand);
+    }
+
+    .modal-buttons-top {
+      margin-bottom: 15px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-text {
+      background: none;
+      border: none;
+      color: var(--sky-top);
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .btn-text:hover { text-decoration: underline; }
+
+    #supplierList {
+      max-height: 300px;
+      overflow-y: auto;
+      margin-bottom: 25px;
+      border: 1px solid #edf2f7;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #f7fafc;
+      cursor: pointer;
+    }
+    .checkbox-row:last-child { border-bottom: none; }
+    .checkbox-row input { width: 16px; height: 16px; cursor: pointer; }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    /* Écran de verrouillage / Connexion */
+    #login-screen {
+      position: fixed;
+      top:0; left:0; right:0; bottom:0;
+      background: linear-gradient(135deg, var(--sky-top) 0%, var(--sand-light) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 20px;
+    }
+
+    .login-box {
+      background: white;
+      padding: 40px;
+      border-radius: var(--radius);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .login-box h2 { margin-bottom: 15px; color: var(--brand); font-size: 1.4rem; }
+    .login-box p { color: #64748b; font-size: 0.95rem; margin-bottom: 25px; }
+
+    .login-box input[type="password"] {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .login-box input[type="password"]:focus {
+      border-color: var(--sea-blue);
+    }
+
+    .login-box .btn { width: 100%; justify-content: center; }
+    
+    #login-error {
+      color: #e53e3e;
+      background: #fff5f5;
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      header { flex-direction: column; align-items: flex-start; }
+      .btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="login-screen">
+    <div class="login-box">
+      <h2>Accès Confidentiel</h2>
+      <p>Veuillez saisir le mot de passe pour accéder aux conditions fournisseurs de l'opération.</p>
+      <div id="login-error"></div>
+      <input type="password" id="password" placeholder="Mot de passe..." onkeydown="if(event.key==='Enter') checkPassword()" />
+      <button class="btn" onclick="checkPassword()">Valider</button>
+    </div>
+  </div>
+
+  <main class="container">
+    <header>
+      <h1>☀️ Conditions Fournisseurs Négociées</h1>
+      <div style="display: flex; gap: 12px; width: 100%; max-width: auto; flex-wrap: wrap;">
+        <button class="btn" onclick="openModal()">🔍 Filtrer les fabricants</button>
+        <a href="index.html" class="btn btn-secondary">🏠 Retour Accueil</a>
+      </div>
+    </header>
+
+    <div id="suppliersGrid"></div>
+  </main>
+
+  <div class="modal-overlay" id="modal">
+    <div class="modal-content">
+      <div class="modal-header">Sélectionnez les fabricants</div>
+      <div class="modal-buttons-top">
+        <button class="btn-text" onclick="selectAll(true)">Tout cocher</button>
+        <button class="btn-text" onclick="selectAll(false)">Tout décocher</button>
+      </div>
+      <div id="supplierList"></div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="document.getElementById('modal').style.display='none'">Annuler</button>
+        <button class="btn" onclick="applySelection()">Appliquer</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Données brutes des fournisseurs du CRI
+    const data = [
+      { name: "ALUCLOS", family: "Clôture / Claustra", discount: "Remise exceptionnelle de 10%", comment: "Valable sur l'ensemble de la gamme Aluclos pour toute commande passée pendant la période de l'opération." },
+      { name: "ALUPROF", family: "Menuiserie Aluminium", discount: "Franco de port abaissé à 1500€", comment: "Optimisation logistique sur les profilés et accessoires alu." },
+      { name: "ATulam", family: "Menuiserie Bois", discount: "-5% supplémentaires dès 3 châssis", comment: "Offre applicable sur les gammes Estilou et Tradition." },
+      { name: "BIOOSS", family: "Pergola bioclimatique", discount: "Option capteur pluie/vent offerte", comment: "Pour toute commande d'une pergola Biooss complète." },
+      { name: "BUBENDORFF", family: "Volet roulant", discount: "Garantie 10 ans incluse sans surcoût", comment: "Sur les moteurs radio et solaires commandés via l'opération." },
+      { name: "CEPROD", family: "Moustiquaire", discount: "-12% sur toute la gamme", comment: "Idéal pour pousser l'offre moustiquaire de début d'été." },
+      { name: "EURADIF", family: "Porte d'entrée", discount: "Barillet sécurité offert", comment: "Sur toutes les portes aluminium de la collection Passage." },
+      { name: "FIBRE", family: "Porte de garage", discount: "Motorisation au prix du manuel", comment: "Valable sur les modèles sectionnels à refoulement plafond." },
+      { name: "FRANCE FERMETURES", family: "Store / Volet", discount: "-7% sur les stores bannes", comment: "Toiles Dickson incluses dans l'offre promotionnelle." },
+      { name: "FUCHS", family: "Menuiserie PVC", discount: "Plaxage couleur au prix du blanc", comment: "Sur les teintes standard (Gris anthracite, Noir, Chêne doré)." },
+      { name: "GEPLAST", family: "Profilés / Finitions", discount: "Remise quantitative de 8%", comment: "Dès 500 ml de profilés de finition commandés." },
+      { name: "GOOD HOME", family: "Carport / Auvent", discount: "-15% sur les structures alu", comment: "Modèles adossés et autoportants." },
+      { name: "GoToob", family: "Domotique / Moteurs", discount: "Pack de démarrage à -20%", comment: "Idéal pour équiper les chantiers en solutions connectées." },
+      { name: "GRIESSER", family: "BSO (Brise-Soleil)", discount: "Télécommande centrale offerte", comment: "Dès 4 BSO équipés de moteurs Griesser." },
+      { name: "K-LINE", family: "Menuiserie Aluminium", discount: "Option vitrage thermique d'été offert", comment: "Le vitrage à contrôle solaire au prix du vitrage standard." },
+      { name: "LAKAL", family: "Volet / Moustiquaire", discount: "-10% sur les combinés volet+moustiquaire", comment: "Le produit phare de la saison à prix réduit." },
+      { name: "MACO", family: "Quincaillerie", discount: "Sachet de cales offert par boîte", comment: "Pour l'achat de paquets de fiches ou de crémones." },
+      { name: "MARQUISES", family: "Pergola / Store", discount: "Chauffage intégré à -50%", comment: "Sur les rampes de chauffage additionnelles pour pergolas." },
+      { name: "MC FRANCE", family: "Menuiserie Mixte Bois/Alu", discount: "-6% sur l'ensemble des coulissants", comment: "Performance bois à l'intérieur, design alu à l'extérieur." },
+      { name: "MEO", family: "Menuiserie Bois", discount: "Traitement haute protection offert", comment: "Finition lasure ou peinture garantie 5 ans." },
+      { name: "MILLET", family: "Menuiserie Multimatériaux", discount: "Remise globale de 5%", comment: "Cumulable sur les gammes Alizé (PVC) et M3D." },
+      { name: "MINCO", family: "Menuiserie Hybride", discount: "Poignée design offerte", comment: "Sur toute la gamme de fenêtres et portes-fenêtres." },
+      { name: "OUEST FERMETURES", family: "Fermetures", discount: "-10% sur les volets battants alu", comment: "Modèles isolés ou extrudés." },
+      { name: "PROFILS SYSTEMES", family: "Profilés Aluminium", discount: "Label Qualicoat Seaside sans plus-value", comment: "Idéal pour les zones côtières ou à forte exposition." },
+      { name: "REHAU", family: "Menuiserie PVC", discount: "-8% sur la gamme Neferia", comment: "Le composite haute performance au meilleur prix." },
+      { name: "SFS", family: "Fixations / Vis", discount: "Une visseuse offerte dès 5000 vis achetées", comment: "Valable sur les vis béton et vis de pose menuiserie." },
+      { name: "SIMU", family: "Motorisation", discount: "5 moteurs achetés = le 6ème gratuit", comment: "Sur la gamme de moteurs filaires et radios T5." },
+      { name: "SMP", family: "Panneaux de porte", discount: "-15% sur les panneaux décoratifs", comment: "Pour le remplacement de vitrages ou la rénovation de portes." },
+      { name: "SOMFY", family: "Domotique / Moteurs", discount: "Passerelle TaHoma Switch à -30%", comment: "Pour toute commande groupée de moteurs Io-homecontrol." },
+      { name: "SOPROFEN", family: "Volet / Porte de garage", discount: "Lame finale renforcée offerte", comment: "Sécurité accrue sur les volets roulants extérieurs." },
+      { name: "SOMALU", family: "Portail / Clôture", discount: "-10% sur les modèles coulissants", comment: "Gamme contemporaine uniquement." },
+      { name: "SOUCHIER", family: "Désenfumage / Ventilation", discount: "Étude technique d'intégration offerte", comment: "Pour les projets tertiaires ou cages d'escalier collectives." },
+      { name: "STORISTES DE FRANCE", family: "Stores intérieurs/extérieurs", discount: "Toile autonettoyante au prix de la classique", comment: "Sur les gammes de stores bannes verticaux." },
+      { name: "VIPROC", family: "Produits de pose (Mousses/Silicone)", discount: "1 carton de cartouches offert pour 5 achetés", comment: "Silicone neutre bas module (Coloris blanc ou gris)." },
+      { name: "WURTH", family: "Outillage / Consommables", discount: "-15% sur le catalogue de pose fenêtres", comment: "Chevilles, bandes d'étanchéité Compriband et outillage à main." }
+    ];
+
+    let selectedIndices = data.map((_, index) => index);
+
+    function renderSuppliers() {
+      const grid = document.getElementById("suppliersGrid");
+      grid.innerHTML = "";
+      
+      data.forEach((item, index) => {
+        if (selectedIndices.includes(index)) {
+          grid.innerHTML += `
+            <div class="supplier-card">
+              <div>
+                <div class="supplier-name">${item.name}</div>
+                <div class="supplier-family">${item.family}</div>
+                <div class="supplier-discount">${item.discount}</div>
+              </div>
+              <div class="supplier-comment">${item.comment}</div>
+            </div>
+          `;
+        }
+      });
+    }
+
+    async function checkPassword() {
+      const val = document.getElementById("password").value;
+      const errorDiv = document.getElementById("login-error");
+
+      try {
+        const response = await fetch('/.netlify/functions/check-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ password: val }),
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          document.getElementById("login-screen").style.display = "none";
+          initModal();
+          renderSuppliers();
+        } else {
+          errorDiv.style.display = "block";
+          errorDiv.innerText = "Mot de passe incorrect";
+        }
+      } catch (err) {
+        // Fallback local en cas d'absence de serveur Netlify pour les tests
+        if (val === "CRI2026") {
+          document.getElementById("login-screen").style.display = "none";
+          initModal();
+          renderSuppliers();
+        } else {
+          errorDiv.style.display = "block";
+          errorDiv.innerText = "Erreur de connexion au serveur";
+        }
+      }
+    }
+
+    function openModal() { document.getElementById("modal").style.display = "flex"; }
+    
+    function applySelection() {
+      selectedIndices = [];
+      document.querySelectorAll("#supplierList input").forEach(input => {
+        if (input.checked) selectedIndices.push(parseInt(input.dataset.i));
+      });
+      renderSuppliers();
+      document.getElementById("modal").style.display = "none";
+    }
+
+    function selectAll(bool) {
+      document.querySelectorAll("#supplierList input").forEach(input => input.checked = bool);
+    }
+
+    function initModal() {
+      const list = document.getElementById("supplierList");
+      list.innerHTML = "";
+      data.forEach((item, index) => {
+        list.innerHTML += `
+          <label class="checkbox-row">
+            <input type="checkbox" data-i="${index}" checked />
+            <span>${item.name} <small style="color:#64748b;">(${item.family})</small></span>
+          </label>
+        `;
+      });
+    }
+  </script>
+</body>
+</html>
