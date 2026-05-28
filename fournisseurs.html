@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OPÉRATION PROMO 2026 ETE – Le C.R.I.- Confidentiel</title>
+  <title>OPÉRATION PROMO 2026 ETE – Le C.R.I. - Confidentiel</title>
 
   <style>
     :root {
@@ -224,55 +224,97 @@
       gap: 12px;
     }
 
-    /* Écran de verrouillage / Connexion */
-    #login-screen {
-      position: fixed;
-      top:0; left:0; right:0; bottom:0;
-      background: linear-gradient(135deg, var(--sky-top) 0%, var(--sand-light) 100%);
+
+    .supplier-logo-wrap {
+      width: 100%;
+      height: 70px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      z-index: 2000;
-      padding: 20px;
+      justify-content: flex-start;
+      margin-bottom: 16px;
     }
 
-    .login-box {
-      background: white;
-      padding: 40px;
-      border-radius: var(--radius);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-      max-width: 400px;
-      width: 100%;
+    .supplier-logo {
+      max-width: 190px;
+      max-height: 65px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .empty-card {
+      grid-column: 1 / -1;
       text-align: center;
+      align-items: center;
     }
 
-    .login-box h2 { margin-bottom: 15px; color: var(--brand); font-size: 1.4rem; }
-    .login-box p { color: #64748b; font-size: 0.95rem; margin-bottom: 25px; }
 
-    .login-box input[type="password"] {
-      width: 100%;
-      padding: 14px;
-      border: 2px solid #e2e8f0;
-      border-radius: 8px;
-      font-size: 1rem;
-      margin-bottom: 15px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .login-box input[type="password"]:focus {
-      border-color: var(--sea-blue);
-    }
 
-    .login-box .btn { width: 100%; justify-content: center; }
-    
-    #login-error {
-      color: #e53e3e;
-      background: #fff5f5;
-      padding: 10px;
-      border-radius: 6px;
-      margin-bottom: 15px;
-      font-size: 0.9rem;
-      display: none;
+    /* Impression PDF de la sélection affichée */
+    @media print {
+      @page { size: A4; margin: 12mm; }
+
+      body {
+        background: #fff !important;
+        padding: 0 !important;
+      }
+
+      header {
+        box-shadow: none !important;
+        border-top: none !important;
+        background: #fff !important;
+        backdrop-filter: none !important;
+        padding: 0 0 16px 0 !important;
+        margin-bottom: 18px !important;
+      }
+
+      .print-hidden,
+      .modal-overlay {
+        display: none !important;
+      }
+
+      #suppliersGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .supplier-card {
+        background: #fff !important;
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+        border-top: 3px solid #31a7ee !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+        backdrop-filter: none !important;
+        padding: 16px !important;
+      }
+
+      .supplier-card:hover {
+        transform: none !important;
+        box-shadow: none !important;
+      }
+
+      .supplier-logo-wrap {
+        height: 50px !important;
+        margin-bottom: 10px !important;
+      }
+
+      .supplier-logo {
+        max-height: 45px !important;
+      }
+
+      .supplier-name {
+        font-size: 1.05rem !important;
+      }
+
+      .supplier-family {
+        font-size: 0.75rem !important;
+        margin-bottom: 8px !important;
+      }
+
+      .supplier-discount {
+        font-size: 0.85rem !important;
+        margin-bottom: 0 !important;
+      }
     }
 
     @media (max-width: 600px) {
@@ -283,21 +325,13 @@
 </head>
 <body>
 
-  <div id="login-screen">
-    <div class="login-box">
-      <h2>Accès Confidentiel</h2>
-      <p>Veuillez saisir le mot de passe pour accéder aux conditions fournisseurs de l'opération.</p>
-      <div id="login-error"></div>
-      <input type="password" id="password" placeholder="Mot de passe..." onkeydown="if(event.key==='Enter') checkPassword()" />
-      <button class="btn" onclick="checkPassword()">Valider</button>
-    </div>
-  </div>
-
+  <!-- CONTENU PRINCIPAL ACCESSIBLE DIRECTEMENT -->
   <main class="container">
     <header>
       <h1>☀️ Conditions Fournisseurs Négociées</h1>
-      <div style="display: flex; gap: 12px; width: 100%; max-width: auto; flex-wrap: wrap;">
+      <div class="print-hidden" style="display: flex; gap: 12px; width: 100%; max-width: auto; flex-wrap: wrap;">
         <button class="btn" onclick="openModal()">🔍 Filtrer les fabricants</button>
+        <button class="btn" onclick="window.print()">🖨️ PDF / Imprimer la sélection</button>
         <a href="index.html" class="btn btn-secondary">🏠 Retour Accueil</a>
       </div>
     </header>
@@ -305,6 +339,7 @@
     <div id="suppliersGrid"></div>
   </main>
 
+  <!-- MODAL DE FILTRAGE -->
   <div class="modal-overlay" id="modal">
     <div class="modal-content">
       <div class="modal-header">Sélectionnez les fabricants</div>
@@ -314,46 +349,49 @@
       </div>
       <div id="supplierList"></div>
       <div class="modal-actions">
-        <button class="btn btn-secondary" onclick="document.getElementById('modal').style.display='none'">Annuler</button>
+        <button class="btn btn-secondary" onclick="closeModal()">Annuler</button>
         <button class="btn" onclick="applySelection()">Appliquer</button>
       </div>
     </div>
   </div>
 
   <script>
-    // Données brutes des fournisseurs du CRI
+    // Données fournisseurs du C.R.I.
+    // n = nom du fournisseur
+    // l = chemin du logo
+    // t = texte de l'offre négociée
     const data = [
     { n: "Alu Preference", l: "logos/ALU_PREFERENCE.png", t: "Remise supplémentaire de 5%<br>(hors portes d'entrée)" },
-    { n: "AMGO", l: "logos/AMGO.png", t: "Offres spéciales PVC & ALU<br>Remise supplémentaire de 7% à 10%<br>selon gamme et dormants" },
+    { n: "AMGO PVC", l: "logos/AMGO.png", t: "A70 Classique 66%+7% soit 68,38%<br>A70 Elégance 65%+7% soit 67,45%<br>A80 Excellence 64%+10% soit 67,60%<br>Mixte PVC alu F80 et ALYA 64%+10% soit 67,60%<br>Porte PVC P70 Elegance (pas de promo en gamme Classic) 62%+10% soit 65,80%<br>Porte PVC de Service et accessoires PVC 58%+10% soit 62,2%<br>*Pas de promotion sur dormants larges de 100+120+140+160 et 180mm" },
+    { n: "AMGO ALU", l: "logos/AMGO.png", t: "OC68 et OC70 58%+10% soit 62,2%<br>C70 + CG70 Elégance 58%+10% soit 62,2%<br>C70 + CG70 Excellence 58%+10% soit 62,2%<br>PE ALU PM86 58%+10% soit 62,2%<br>PE 70 Elégance 58%+10% soit 62,2%<br>P70 technique et accessoires ALU 58%+10% soit 62,2%<br>Pas de promo sur Porte Alu PM80" },
     { n: "Art Home Alu", l: "logos/Arthomealu.jpg", t: "Option éclairage - Spots LED offerts" },
-    { n: "Bandalux", l: "logos/bandalux.png", t: "Remise supplémentaire de 5% - Applicable uniquement sur la base de notre remise de 66% (sauf bannes, automatismes, toilesconfectionnées, toiles métrage)." },
-    { n: "Baumann + Hüppe", l: "logos/baumann_hupe.png", t: "Remise supplémentaire de 5%<br>(hors remise spéciale 'projet')" },
-    { n: "Bel'M", l: "logos/Belm.jpg", t: "Remise supplémentaire de 3%<br>Sur les portes ALU<br>(Hors PS, hors prix spéciaux, hors SAV)<br>Offre non cumulable avec d'autres offres" },
+    { n: "Bandalux", l: "logos/bandalux.png", t: "Remise supplémentaire de 5% - Applicable uniquement sur la base de notre remise de 66%<br>(sauf bannes, automatismes, toiles confectionnées, toiles métrage)." },
+    { n: "Baumann Hüppe", l: "logos/baumann_hupe.png", t: "Remise supplémentaire de 5%<br>(hors remise spéciale 'projet')" },
+    { n: "Bel'M", l: "logos/Belm.jpg", t: "Remise supplémentaire de 3%<br>Sur les portes ALU<br>(Hors PS, hors prix spéciaux, hors prix exclusif CRI, hors SAV)<br>Offre non cumulable avec d'autres offres" },
     { n: "Bieber", l: "logos/bieber.jpg", t: "Remise supplémentaire de 5%" },
     { n: "Boulangeot", l: "logos/boulangeot.png", t: "Remise supplémentaire de 3%" },
-    { n: "Bremaud", l: "logos/Bremaud.jpg", t: "Gamme ALU : aide de 2%<br>Gamme PVC : aide de 2% (hors gamme SERA)<br>Gamme BOIS : aide de 2%" },
+    { n: "Bremaud", l: "logos/Bremaud.jpg", t: "Gamme ALU : Remise supplémentaire de 2%<br>Gamme PVC : Remise supplémentaire de 2% (hors gamme SERA)<br>Gamme BOIS : Remise supplémentaire de 2%" },
     { n: "Cadiou", l: "logos/cadiou.png", t: "Remise supplémentaire de 7%<br>KOSTUM, CEKLO, COTE PORTAIL<br> (Hors prix spéciaux)" },
     { n: "Chauvat", l: "logos/chauvat.png", t: "Remise supplémentaire de 3%" },
     { n: "Ehret", l: "logos/Ehret.png", t: "Remise supplémentaire de 10%" },
     { n: "Elva", l: "logos/Elva.png", t: "Remise supplémentaire de 4%<br> Sur BOIS & PVC" },
-    { n: "Futurol", l: "logos/Futurol.png", t: "Remise supplémentaire de 5%sur tous produits complets" },
+    { n: "Futurol", l: "logos/Futurol.png", t: "Remise supplémentaire de 5% sur tous produits complets <br>(Axes, tabliers seuls et pièces détachées : non concernés)" },
     { n: "Gaviota", l: "logos/Gaviota.jpg", t: "Remise supplémentaire de 3%" },
     { n: "La Toulousaine", l: "logos/La_toulousaine.jpg", t: "Remise supplémentaire de 5%" },
-    { n: "Legallais", l: "logos/Legallais.png", t: "Remise supplémentaire de 10%<br>Sauf sauf silicone, fermes portes, service ILLICO, moustiquaires, bâton de maréchal, grille de ventilation" },
-    { n: "Marquises", l: "logos/Marquises.jpg", t: "OFFRE JOURS FOUS<br>+10% sauf open R et open R2 et R3 qui bénéficient de +20%<br>(non applicable sur les options et équipements tels que ZIP Open, BSOOpen, Open’Sol)<br>OFFRE SOLAIRE<br> Pour l’achat d’un store en Motorisation Autonome, parmi les modèles Ambre, Jade, Loggia, On’x, Quartz, Perle et Véranda<br>Le moteur solaire est au prix du moteur radio IO Somfy, soit un avantage de 346 € PP HT (selon Tarifs en vigueur en décembre 2025)" },
-    { n: "Molenat", l: "logos/molenat.jpg", t: "Plus-value OB offerte sur les gammes bois Lena" },
+    { n: "Legallais", l: "logos/Legallais.png", t: "Remise supplémentaire de 10%<br>Sauf silicone, fermes portes, service ILLICO, moustiquaires, bâton de maréchal, grille de ventilation" },
     { n: "Neobaie", l: "logos/neobaie.png", t: "Remise supplémentaire de 5%" },
     { n: "Picard", l: "logos/picard.jpg", t: "Remise supplémentaire de 5%<br>sur Portes Diamant 10, Diamant 20<br> Diamant 2 vantaux et tierce, Diamant Sérénité" },
     { n: "Prefal", l: "logos/Prefal.png", t: "Remise supplémentaire de 6%" },
     { n: "Profalux", l: "logos/profalux.png", t: "Remise supplémentaire de 5%" },
     { n: "Roziere", l: "logos/roziere.png", t: "Remise supplémentaire de 4% sur la gamme bi-matière" },
-    { n: "Serpug", l: "logos/serpug.png", t: "1 point de remise supplémentaire sur :<br>GRILLES - AZUR / CLOSE / DROITE TORSADEE / LAGUNE / EPIS / GALBEE / TOULOUSAINE / VOLUTE<br>Dimensions 75/40 - 75/60 - 95/60 - 95/80 : Remise 69 à 70 %<br>*uniquement en scellement entre tableau et pré peint noir (sans option)" },
-    { n: "Sifisa", l: "logos/sifisa.png", t: "Gammes façades de placard sur-mesure (hors chantier) = remise +5%<br>Gammes aménagements 2D et 3D = remise +5%<br>Gammes verrières sur-mesure = remise +10%<br>Gammes portes d'intérieur Sifisa = remise +5%" },
+    { n: "Serpug", l: "logos/serpug.png", t: "Remise supplémentaire de 1% sur les grilles<br>Modèles - AZUR / CLOSE / DROITE TORSADEE / LAGUNE / EPIS / GALBEE / TOULOUSAINE / VOLUTE<br>Dimensions 75/40 - 75/60 - 95/60 - 95/80 : Remise 69 à 70 %<br>*uniquement en scellement entre tableau et pré peint noir (sans option)" },
+    { n: "Sifisa", l: "logos/sifisa.png", t: "Remise supplémentaire de 5% sur :<br>Gammes façades de placard sur-mesure (hors chantier)<br>Gammes aménagements 2D et 3D<br>Gammes portes d'intérieur Sifisa<br>Remise supplémentaire de 10% sur :<br>Gammes verrières sur-mesure" },
     { n: "Soko", l: "logos/soko.jpg", t: "Remise supplémentaire de 5%<br>en pied de facture" },
-    { n: "Somfy", l: "logos/somfy.png", t: "Remise complémentaire de +10%<br>Depuis l'Eshop sur <br>code remise: AUT 206 réf de télécommandes et capteurs motorisation et remplacement de volet roulant + kit Yslo Flex" },
+    { n: "Somfy", l: "logos/somfy.png", t: "Remise supplémentaire de +10%<br>Depuis l'Eshop sur <br>code remise: AUT 206 réf de télécommandes et capteurs motorisation et remplacement de volet roulant + kit Yslo Flex" },
     { n: "Soprofen", l: "logos/soprofen.jpg", t: "Remise supplémentaire de 5%<br>Sur VR - PG - PS" },
     { n: "Sothoferm", l: "logos/sothoferm.png", t: "Remise supplémentaire de 4%" },
-    { n: "Tubauto", l: "logos/tubauto.jpg", t: "Remise supplémentaire de 5%<br>Sur la gamme sectionnelle EUROMATIC<br>Multiple couleur au prix du blanc - Portillon intégré disponible en option"},
+    { n: "Stores Marquises", l: "logos/Marquises.jpg", t: "OFFRE JOURS FOUS<br>Remise supplémentaire de 20% sur open R et open R2 et R3 et 10% sur les autres modèles<br>(non applicable sur les options et équipements tels que ZIP Open, BSOOpen, Open’Sol)<br>OFFRE SOLAIRE<br> Pour l’achat d’un store en Motorisation Autonome, parmi les modèles Ambre, Jade, Loggia, On’x, Quartz, Perle et Véranda<br>Le moteur solaire est au prix du moteur radio IO Somfy, soit un avantage de 346 € PP HT (selon Tarifs en vigueur en décembre 2025)" },
+    { n: "Tubauto", l: "logos/tubauto.jpg", t: "Remise supplémentaire de 5%<br>Sur la gamme sectionnelle EUROMATIC<br>Multiple couleur au prix du blanc - Portillon intégré disponible en option" },
     { n: "Zilten", l: "logos/Zilten.png", t: "Remise supplémentaire de 3%<br> Sur les gammes NATIV & PVC" }
     ];
 
@@ -362,66 +400,51 @@
     function renderSuppliers() {
       const grid = document.getElementById("suppliersGrid");
       grid.innerHTML = "";
-      
-      data.forEach((item, index) => {
-        if (selectedIndices.includes(index)) {
-          grid.innerHTML += `
-            <div class="supplier-card">
-              <div>
-                <div class="supplier-name">${item.name}</div>
-                <div class="supplier-family">${item.family}</div>
-                <div class="supplier-discount">${item.discount}</div>
+
+      if (selectedIndices.length === 0) {
+        grid.innerHTML = `
+          <div class="supplier-card empty-card">
+            <div class="supplier-name">Aucun fournisseur sélectionné</div>
+            <div class="supplier-comment">Cliquez sur “Filtrer les fabricants” pour sélectionner les fournisseurs à afficher.</div>
+          </div>
+        `;
+        return;
+      }
+
+      selectedIndices.forEach(index => {
+        const item = data[index];
+        if (!item) return;
+
+        grid.innerHTML += `
+          <div class="supplier-card">
+            <div>
+              <div class="supplier-logo-wrap">
+                <img src="${item.l}" alt="Logo ${item.n}" class="supplier-logo" onerror="this.parentElement.style.display='none';">
               </div>
-              <div class="supplier-comment">${item.comment}</div>
+              <div class="supplier-name">${item.n}</div>
+              <div class="supplier-family">Conditions négociées C.R.I.</div>
+              <div class="supplier-discount">${item.t}</div>
             </div>
-          `;
-        }
+          </div>
+        `;
       });
     }
 
-    async function checkPassword() {
-      const val = document.getElementById("password").value;
-      const errorDiv = document.getElementById("login-error");
-
-      try {
-        const response = await fetch('/.netlify/functions/check-password', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ password: val }),
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-          document.getElementById("login-screen").style.display = "none";
-          initModal();
-          renderSuppliers();
-        } else {
-          errorDiv.style.display = "block";
-          errorDiv.innerText = "Mot de passe incorrect";
-        }
-      } catch (err) {
-        // Fallback local en cas d'absence de serveur Netlify pour les tests
-        if (val === "CRI2026") {
-          document.getElementById("login-screen").style.display = "none";
-          initModal();
-          renderSuppliers();
-        } else {
-          errorDiv.style.display = "block";
-          errorDiv.innerText = "Erreur de connexion au serveur";
-        }
-      }
+    function openModal() {
+      document.getElementById("modal").style.display = "flex";
     }
 
-    function openModal() { document.getElementById("modal").style.display = "flex"; }
-    
+    function closeModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
     function applySelection() {
       selectedIndices = [];
       document.querySelectorAll("#supplierList input").forEach(input => {
-        if (input.checked) selectedIndices.push(parseInt(input.dataset.i));
+        if (input.checked) selectedIndices.push(parseInt(input.dataset.i, 10));
       });
       renderSuppliers();
-      document.getElementById("modal").style.display = "none";
+      closeModal();
     }
 
     function selectAll(bool) {
@@ -431,15 +454,28 @@
     function initModal() {
       const list = document.getElementById("supplierList");
       list.innerHTML = "";
+
       data.forEach((item, index) => {
         list.innerHTML += `
           <label class="checkbox-row">
             <input type="checkbox" data-i="${index}" checked />
-            <span>${item.name} <small style="color:#64748b;">(${item.family})</small></span>
+            <span>${item.n}</span>
           </label>
         `;
       });
     }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initModal();
+      renderSuppliers();
+
+      const modal = document.getElementById("modal");
+      modal.addEventListener("click", event => {
+        if (event.target === modal) {
+          closeModal();
+        }
+      });
+    });
   </script>
 </body>
 </html>
