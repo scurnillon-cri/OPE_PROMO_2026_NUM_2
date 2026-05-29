@@ -24,7 +24,7 @@
     }
 
     body {
-      font-family: system-ui, -apple-system, \"Segoe UI\", Roboto, Arial, sans-serif;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
       color: var(--ink);
       background: linear-gradient(135deg, var(--sand-light) 0%, #fffbf5 100%);
       min-height: 100vh;
@@ -61,6 +61,10 @@
       border-top: 5px solid var(--sea-blue);
     }
 
+    .conditions-card {
+      border-top: 5px solid #ff9800;
+    }
+
     .section-card h2 {
       font-size: 1.45rem;
       color: var(--ink);
@@ -77,6 +81,144 @@
       margin-bottom: 25px;
     }
 
+    .rules-box {
+      background: #fff9f0;
+      border: 1px solid #ffe0b2;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+      margin-bottom: 25px;
+    }
+
+    .rules-title {
+      font-weight: 700;
+      color: #e65100;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .rules-list, .dates-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .rules-list li, .dates-list li {
+      margin-bottom: 12px;
+      line-height: 1.5;
+      position: relative;
+      padding-left: 25px;
+    }
+
+    .dates-list li::before {
+      content: "📅";
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .rules-list li::before {
+      content: "⚠️";
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    /* Styles du Formulaire d'inscription */
+    .form-inscription {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 25px;
+      margin-top: 30px;
+    }
+
+    .form-inscription h3 {
+      font-size: 1.2rem;
+      color: var(--ink);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    @media (max-width: 600px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .form-group label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #475569;
+    }
+
+    .form-group input, .form-group textarea {
+      font-family: inherit;
+      padding: 10px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 1rem;
+      color: var(--ink);
+      background: var(--white);
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: var(--sea-blue);
+      box-shadow: 0 0 0 3px rgba(0, 164, 180, 0.15);
+    }
+
+    .form-full-width {
+      grid-column: span 2;
+    }
+
+    @media (max-width: 600px) {
+      .form-full-width {
+        grid-column: span 1;
+      }
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 15px;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+
+    .checkbox-group input {
+      width: 18px;
+      height: 18px;
+      margin-top: 3px;
+      cursor: pointer;
+    }
+
+    .checkbox-group label {
+      font-size: 0.95rem;
+      line-height: 1.4;
+      color: #334155;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
     .btn {
       display: inline-block;
       background-color: var(--sea-blue);
@@ -85,6 +227,8 @@
       border-radius: 8px;
       text-decoration: none;
       font-weight: 600;
+      border: none;
+      cursor: pointer;
       transition: all 0.2s ease-in-out;
       box-shadow: 0 5px 15px rgba(0, 164, 180, 0.25);
     }
@@ -93,6 +237,11 @@
       background-color: #008b99;
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(0, 164, 180, 0.35);
+    }
+
+    .btn-submit {
+      width: 100%;
+      font-size: 1.05rem;
     }
 
     /* Grille de cartes pour la communication */
@@ -149,7 +298,6 @@
       gap: 6px;
     }
 
-    /* Styles pour la sous-section Partenaires */
     .partenaires-title {
       font-size: 1.15rem;
       font-weight: 700;
@@ -246,6 +394,77 @@
       <img src="Images/Banniere.png" alt="Opération Promo Été 2026" class="banner-img" />
     </div>
 
+    <section class="section-card conditions-card">
+      <h2>📅 Calendrier & Règles de l'Opération</h2>
+      <p>Retrouvez l'organisation stratégique de la campagne <strong>Promo Été 2026</strong> programmée du <strong>30 mai au 20 juillet</strong>.</p>
+      
+      <ul class="dates-list">
+        <li><strong>Du 30 mai au 30 juin :</strong> Période de communication locale intense (E-mailing, SMS, actions digitales). C'est le moment d'activer vos kits !</li>
+        <li><strong>Du 22 juin au 20 juillet :</strong> Période d'application des remises. C'est pendant cette fenêtre que vos fournisseurs partenaires valident vos conditions promo.</li>
+      </ul>
+
+      <div class="rules-box">
+        <div class="rules-title">Conditions d'activation des avantages fournisseurs :</div>
+        <ul class="rules-list">
+          <li>Cette campagne promotionnelle est strictement conditionnée par la mise en place d'une communication de votre part d'au moins <strong>1 300 € HT</strong>.</li>
+          <li>Vos justificatifs d'investissement (factures de communication) devront obligatoirement être fournis pour le déclenchement des remises.</li>
+        </ul>
+      </div>
+
+      <div class="form-inscription">
+        <h3>📝 Formulaire d'inscription à l'Opération d'Été</h3>
+        <p style="font-size: 0.95rem; margin-bottom: 15px;">Veuillez remplir vos informations ci-dessous pour valider votre participation et activer vos avantages.</p>
+        
+        <form action="https://formsubmit.co/s.curnillon@cri-leclub.com" method="POST">
+          <input type="hidden" name="_cc" value="b.cadene@cri-leclub.com">
+          <input type="hidden" name="_subject" value="Nouvelle inscription Promo Été 2026 - Le CRI">
+          <input type="hidden" name="_success" value="https://project-sm9e4.vercel.app/?success=true">
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="entreprise">Nom de l'entreprise *</label>
+              <input type="text" id="entreprise" name="Entreprise" required placeholder="Ex: Menuiserie Du Sud">
+            </div>
+            <div class="form-group">
+              <label for="nom_prenom">Nom & Prénom *</label>
+              <input type="text" id="nom_prenom" name="Nom_Prenom" required placeholder="Ex: Jean Dupont">
+            </div>
+            <div class="form-group">
+              <label for="telephone">Numéro de téléphone *</label>
+              <input type="tel" id="telephone" name="Telephone" required placeholder="Ex: 06 12 34 56 78">
+            </div>
+            <div class="form-group">
+              <label for="email">Adresse e-mail *</label>
+              <input type="email" id="email" name="email" required placeholder="Ex: contact@entreprise.com">
+            </div>
+            <div class="form-group form-full-width">
+              <label for="engagement">Votre engagement</label>
+              <textarea id="engagement" name="Engagement_Texte" rows="3" readonly style="background-color: #e2e8f0; color: #475569; resize: none;">Je souhaite participer à l'opération Promo, j'ai bien pris connaissances que cette campagne est conditionnée par un budget de communication de 1300 € HT minimum.</textarea>
+            </div>
+          </div>
+
+          <div class="checkbox-group">
+            <input type="checkbox" id="validation_conditions" name="Conditions_Acceptees" required>
+            <label for="validation_conditions">Je valide mon inscription et j'accepte les conditions d'investissement requises pour bénéficier des remises fournisseurs. *</label>
+          </div>
+
+          <button type="submit" class="btn btn-submit">Valider mon inscription et accepter les conditions</button>
+        </form>
+      </div>
+
+      <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('success') === 'true') {
+          document.write(`
+            <div style="margin-top: 20px; padding: 20px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 10px; color: #065f46; text-align: center;">
+              <h4 style="font-size: 1.15rem; margin-bottom: 8px;">🎉 Merci, votre inscription à la campagne Promo été 2026 a bien été enregistrée.</h4>
+              <p style="font-size: 0.98rem;">Vous avez bien validé les conditions pour bénéficier des promos fournisseurs.</p>
+            </div>
+          `);
+        }
+      </script>
+    </section>
+
     <section class="section-card">
       <h2>🤝 Les fournisseurs qui vous accompagnent</h2>
       <p>Accédez aux conditions préférentielles et aux remises exclusives obtenues pour vous auprès de nos partenaires fabricants pour cette opération été.</p>
@@ -276,7 +495,6 @@
 
       <h3 class="partenaires-title">✨ Nos partenaires qui vous accompagnent :</h3>
       <div class="partenaires-list">
-        
         <div class="partenaire-row">
           <div class="partenaire-logo-box">
             <img src="Images/Solis.jpg" alt="Solis System" class="partenaire-logo" />
@@ -286,33 +504,23 @@
             <div class="partenaire-desc">Bénéficiez de routages performants pour toucher directement vos clients sur leur mobile.</div>
             <div class="partenaire-promo">🎁 -20% sur toutes les commandes du 28 mai au 30 juin (min. 2500 SMS)</div>
           </div>
-          <a href="mailto:contact@solis-system.com?subject=Commande%20SMS%20-%20Op%C3%A9ration%20Promo%202026&body=Bonjour%2C%0D%0A%0D%0AJe%20souhaite%20b%C3%A9n%C3%A9ficier%20de%20l'offre%20SMS%20-%2020%25%20sur%20toutes%20les%20commandes%20du%2028%20mai%20au%2030%20juin%20%28minimum%202500%20SMS%29.%0D%0A%0D%0AMerci%20de%20me%20recontacter.%0D%0A%0D%0ACordialement" class="btn btn-sm"
->  Faire une demande de devis </a>
+          <a href="mailto:contact@solis-system.com?subject=Commande%20SMS%20-%20Op%C3%A9ration%20Promo%202026&body=Bonjour%2C%0D%0A%0D%0AJe%20souhaite%20b%C3%A9n%C3%A9ficier%20de%20l'offre%20SMS%20-%2020%25%20sur%20toutes%20les%20commandes%20du%2028%20mai%20au%2030%20juin%20%28minimum%202500%20SMS%29.%0D%0A%0D%0AMerci%20de%20me%20recontacter.%0D%0A%0D%0ACordialement" class="btn btn-sm">Faire une demande de devis</a>
         </div>
 
-<div class="partenaire-row">
-  <div class="partenaire-logo-box">
-    <img src="Images/Mediatyc.png" alt="Mediatyc" class="partenaire-logo" />
-  </div>
-
-  <div class="partenaire-info">
-    <div class="partenaire-name">Mediatyc — Contenu vidéo & Réseaux sociaux</div>
-    <div class="partenaire-desc">Donnez de l'impact à votre communication grâce à des visuels animés et des campagnes ciblées.</div>
-    <div class="partenaire-promo">🎁 -5% sur vos prestations du 28 mai au 30 juin</div>
-  </div>
-
-  <a 
-    href="mailto:fabien@media-tyc.com?subject=Demande%20de%20devis%20Mediatyc%20-%20Offre%20CRI&body=Bonjour%20Fabien%2C%0D%0A%0D%0AJe%20me%20permets%20de%20vous%20contacter%20dans%20le%20cadre%20de%20l%E2%80%99op%C3%A9ration%20promo%20du%20CRI.%0D%0A%0D%0AJe%20suis%20int%C3%A9ress%C3%A9%20par%20vos%20prestations%20Mediatyc%20autour%20du%20contenu%20vid%C3%A9o%20et%20des%20r%C3%A9seaux%20sociaux%2C%20et%20j%E2%80%99aimerais%20%C3%A9changer%20avec%20vous%20afin%20d%E2%80%99obtenir%20un%20devis%20adapt%C3%A9%20%C3%A0%20mes%20besoins.%0D%0A%0D%0AJe%20souhaite%20%C3%A9galement%20b%C3%A9n%C3%A9ficier%20de%20l%E2%80%99offre%20-5%25%20propos%C3%A9e%20du%2028%20mai%20au%2030%20juin.%0D%0A%0D%0APouvez-vous%20me%20recontacter%20afin%20que%20nous%20puissions%20pr%C3%A9ciser%20mon%20projet%20%3F%0D%0A%0D%0ABien%20cordialement%2C"
-    class="btn btn-sm"
-  >
-    Faire une demande de devis
-  </a>
-</div>
-
+        <div class="partenaire-row">
+          <div class="partenaire-logo-box">
+            <img src="Images/Mediatyc.png" alt="Mediatyc" class="partenaire-logo" />
+          </div>
+          <div class="partenaire-info">
+            <div class="partenaire-name">Mediatyc — Contenu vidéo & Réseaux sociaux</div>
+            <div class="partenaire-desc">Donnez de l'impact à votre communication grâce à des visuels animés et des campagnes ciblées.</div>
+            <div class="partenaire-promo">🎁 -5% sur vos prestations du 28 mai au 30 juin</div>
+          </div>
+          <a href="mailto:fabien@media-tyc.com?subject=Demande%20de%20devis%20Mediatyc%20-%20Offre%20CRI&body=Bonjour%20Fabien%2C%0D%0A%0D%0AJe%20me%20permets%20de%20vous%20contacter%20dans%20le%20cadre%20de%20l%E2%80%99op%C3%A9ration%20promo%20du%20CRI.%0D%0A%0D%0AJe%20suis%20int%C3%A9ress%C3%A9%20par%20vos%20prestations%20Mediatyc%20autour%20du%20contenu%20vid%C3%A9o%20et%20des%20r%C3%A9seaux%20sociaux%2C%20et%20j%E2%80%99aimerais%20%C3%A9changer%20avec%20vous%20afin%20d%E2%80%99obtenir%20un%20devis%20adapt%C3%A9%20%C3%A0%20mes%20besoins.%0D%0A%0D%0AJe%20souhaite%20%C3%A9galement%20b%C3%A9n%C3%A9ficier%20de%20l%E2%80%99offre%20-5%25%20propos%C3%A9e%20du%2028%20mai%20au%2030%20juin.%0D%0A%0D%0APouvez-vous%20me%20recontacter%20afin%20que%20nous%20puissions%20pr%C3%A9ciser%20mon%20projet%20%3F%0D%0A%0D%0ABien%20cordialement%2C" class="btn btn-sm">Faire une demande de devis</a>
+        </div>
       </div>
     </section>
 
   </main>
-
 </body>
 </html>
